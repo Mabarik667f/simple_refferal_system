@@ -1,6 +1,6 @@
 from django.core.validators import RegexValidator
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.db import models
 
 class CustomUser(AbstractBaseUser):
     password = None
@@ -14,11 +14,8 @@ class CustomUser(AbstractBaseUser):
             code="invalid_phone"
         ),
     ])
-    invite_code = models.CharField(max_length=6, db_index=True, unique=True)
-    activated_invited_code = models.CharField(max_length=6, null=True)
 
     USERNAME_FIELD = "phone"
-    REQUIRED_FIELDS = ["invite_code"]
 
     class Meta:
         constraints = [
@@ -27,8 +24,40 @@ class CustomUser(AbstractBaseUser):
                 name="user_phone_regex_constraint"
             ),
             models.UniqueConstraint(
-                fields=["phone", "invite_code"],
-                name="unique_phone_invite_code_constraint"
+                fields=["phone"],
+                name="unique_phone_constraint"
+            )
+        ]
+
+    activated_code = models.ManyToManyField(to="InvitationCode", through="ActivatedCodeForUser")
+    objects = models.Manager()
+
+
+
+class InvitationCode(models.Model):
+    user = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE, primary_key=True)
+    code = models.CharField(max_length=6, db_index=True, unique=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["code"],
+                name="code_constraint"
+            )
+        ]
+
+    objects = models.Manager()
+
+
+class ActivatedCodeForUser(models.Model):
+    user = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE, primary_key=True)
+    invitation_code = models.ForeignKey(to=InvitationCode, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', "invitation_code"],
+                name="unique_user_code"
             )
         ]
 
