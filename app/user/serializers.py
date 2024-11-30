@@ -10,9 +10,6 @@ from rest_framework.fields import RegexValidator
 USER = get_user_model()
 redis_client = settings.REDIS_CLIENT
 
-# class UserSerializer(serializers.):
-# pass
-
 
 class AuthSerializer(serializers.ModelSerializer):
     code = serializers.CharField(
@@ -40,6 +37,14 @@ class AuthCreateSerializer(AuthSerializer):
         ],
     )
 
+    phone = serializers.CharField(
+            max_length=11,
+            validators=[
+                RegexValidator(
+                    regex=r"^7\d{10}$",
+                ),
+            ],
+        )
     def create(self, validated_data: dict) -> tuple[str, str]:
         phone = validated_data.get("phone", "")
         USER.objects.get_or_create(phone=phone)
@@ -83,4 +88,12 @@ class AuthOutSerializer(AuthSerializer):
         user = USER.objects.get(phone=phone)
         token, _ = Token.objects.get_or_create(user=user)
         data = {"token": token.key}
+        redis_client.delete(phone)
         return data
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = USER
+        fields = ["id", "phone"]

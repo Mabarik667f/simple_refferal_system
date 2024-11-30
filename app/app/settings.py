@@ -180,6 +180,9 @@ CSRF_TRUSTED_ORIGINS = []
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication"
+    ]
 }
 
 SPECTACULAR_SETTINGS = {
@@ -187,4 +190,6 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Description",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_AUTHENTICATION": ["rest_framework.authentication.TokenAuthentication"]
+
 }
