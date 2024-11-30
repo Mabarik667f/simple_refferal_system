@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os.path
+import redis
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     "drf_spectacular",
     "rest_framework",
+    "rest_framework.authtoken",
     "user.apps.UserConfig",
 ]
 
@@ -91,6 +93,11 @@ DATABASES = {
     }
 }
 
+REDIS_CLIENT = redis.Redis(
+    host=os.getenv("REDIS_HOST", default="localhost"),
+    port=int(os.getenv("REDIS_PORT", default=6379)),
+    db=0
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
