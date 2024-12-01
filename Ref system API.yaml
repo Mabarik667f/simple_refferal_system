@@ -1,0 +1,227 @@
+openapi: 3.0.3
+info:
+  title: Ref system API
+  version: 1.0.0
+  description: Description
+paths:
+  /v1/user/{id}/:
+    get:
+      operationId: v1_user_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /v1/user/activate-invitation-code/:
+    post:
+      operationId: v1_user_activate_invitation_code_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateCode'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ActivateCode'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ActivateCode'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivateCode'
+          description: ''
+  /v1/user/auth/:
+    post:
+      operationId: v1_user_auth_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthCreate'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthCreate'
+          description: Успешно создан код подтверждения
+        '400':
+          description: Ошибка валидации
+  /v1/user/list/:
+    get:
+      operationId: v1_user_list_list
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SimpleUser'
+          description: ''
+  /v1/user/me/:
+    get:
+      operationId: v1_user_me_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /v1/user/verify-code/:
+    post:
+      operationId: v1_user_verify_code_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthOut'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthOut'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthOut'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthOut'
+          description: Авторизация прошла успешно
+        '400':
+          description: Ошибка валидации
+components:
+  schemas:
+    ActivateCode:
+      type: object
+      properties:
+        invitation_code:
+          type: string
+          writeOnly: true
+        user:
+          type: integer
+      required:
+      - invitation_code
+      - user
+    AuthCreate:
+      type: object
+      properties:
+        phone:
+          type: string
+          pattern: ^7\d{10}$
+          maxLength: 11
+        code:
+          type: string
+          readOnly: true
+          pattern: ^\d+$
+          maxLength: 4
+          minLength: 4
+      required:
+      - code
+      - phone
+    AuthOut:
+      type: object
+      properties:
+        phone:
+          type: string
+          writeOnly: true
+          pattern: ^7\d{10}$
+          maxLength: 11
+        token:
+          type: string
+          readOnly: true
+          pattern: ^[a-f0-9]{40}$
+        code:
+          type: string
+          writeOnly: true
+          pattern: ^\d+$
+          maxLength: 4
+          minLength: 4
+      required:
+      - code
+      - phone
+      - token
+    SimpleUser:
+      type: object
+      properties:
+        phone:
+          type: string
+          readOnly: true
+          pattern: ^7\d{10}$
+          maxLength: 11
+      required:
+      - phone
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+          pattern: ^7\d{10}$
+          maxLength: 11
+        my_code:
+          type: string
+          readOnly: true
+        activated_code:
+          type: string
+          readOnly: true
+      required:
+      - activated_code
+      - id
+      - my_code
+      - phone
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
