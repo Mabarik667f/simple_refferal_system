@@ -1,6 +1,6 @@
 import fetchApiV1 from "@/api";
 
-export default async function register(phone: string) {
+export default async function auth(phone: string) {
   const options = {
     method: "POST",
     headers: {

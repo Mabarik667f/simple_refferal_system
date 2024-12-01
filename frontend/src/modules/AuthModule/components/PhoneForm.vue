@@ -8,7 +8,7 @@ export default defineComponent({
     setup() {
         const router = useRouter();
         const store = authStore();
-        const { setUserData } = store;
+        const { setUserTemporaryData } = store;
 
         const phone = ref<string>("");
         const errors = ref<ErrorTypes>({
@@ -18,7 +18,7 @@ export default defineComponent({
         const authHook = async () => {
             const result = await auth(phone.value);
             if (Object.keys(result).length >= 2) {
-                setUserData(result["phone"], result["code"]);
+                setUserTemporaryData(result["phone"], result["code"]);
                 router.push("verify-code");
             } else {
                 errors.value = result;

@@ -1,6 +1,4 @@
 import { RouteLocationNormalized } from "vue-router";
-import Cookies from "js-cookie";
-
 import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
 import VerifyCodeView from "@/views/VerifyCodeView.vue";
@@ -20,7 +18,7 @@ const authGuard = async (
   next: Function,
 ) => {
   if (!isAuth.value) {
-    next("/login");
+    next("/auth");
   } else {
     next();
   }

@@ -1,6 +1,7 @@
 <script lang="ts">
+import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { authStore } from "@/store/authStore";
 import { ErrorTypes } from "@/interfaces/errorIntefaces";
 import verifyCode from "../api/verifyCode";
@@ -27,6 +28,7 @@ export default defineComponent({
                 code.value = "";
             }
         };
+        onMounted(() => alert(`Ваш код: ${Cookies.get("code")}`));
         return { code, verifyCodeHook, errors };
     },
 });
