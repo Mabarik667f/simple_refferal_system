@@ -2,7 +2,8 @@ from django.urls import path
 
 from user.views import (
     AuthView,
-    UsersByInviteCodeView,
+    UsersByInvitationCodeView,
+    CurrentUserView,
     VerifyCodeView,
     UserView,
     ActivateInviteCodeView
@@ -11,7 +12,8 @@ from user.views import (
 urlpatterns = [
     path("auth/", AuthView.as_view(), name="auth"),
     path("verify-code/", VerifyCodeView.as_view(), name="verify-code"),
-    path("activate-invite-code/", ActivateInviteCodeView.as_view(), name="activate-invite-code"),
+    path("activate-invitation-code/", ActivateInviteCodeView.as_view(), name="activate-invitation-code"),
     path("<int:pk>/", UserView.as_view(), name="get-user"),
-    path("list/", UsersByInviteCodeView.as_view(), name="list")
+    path("me/", CurrentUserView.as_view(), name="me"),
+    path("list/", UsersByInvitationCodeView.as_view(), name="list")
 ]

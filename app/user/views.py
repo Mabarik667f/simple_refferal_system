@@ -79,6 +79,14 @@ class UserView(generics.RetrieveAPIView):
     lookup_field = "pk"
 
 
+class CurrentUserView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
 class ActivateInviteCodeView(generics.CreateAPIView):
 
     queryset = InvitationCode.objects.all()
@@ -95,7 +103,7 @@ class ActivateInviteCodeView(generics.CreateAPIView):
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UsersByInviteCodeView(generics.ListAPIView):
+class UsersByInvitationCodeView(generics.ListAPIView):
 
     serializer_class = SimpleUserSerializer
     permission_classes = [permissions.IsAuthenticated]
