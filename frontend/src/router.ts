@@ -38,39 +38,24 @@ const userAuth = async (
   }
 };
 
-const verifyCode = async (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: Function,
-) => {
-  if (!isAuth.value && Cookies.get("access") !== "undefined") {
-    next("/");
-  } else {
-    next();
-  }
-};
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
     component: HomeView,
-    props: {},
-    // beforeEnter: authGuard,
+    beforeEnter: authGuard,
   },
   {
     path: "/auth",
     name: "auth",
     component: AuthView,
-    props: {},
-    // beforeEnter: authGuard,
+    beforeEnter: userAuth,
   },
   {
     path: "/verify-code",
     name: "verify-code",
     component: VerifyCodeView,
-    props: {},
-    // beforeEnter: authGuard,
+    beforeEnter: userAuth,
   },
 
   {

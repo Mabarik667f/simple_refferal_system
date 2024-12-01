@@ -1,11 +1,15 @@
 <script lang="ts">
-export default defineComponent({})
+import { PhoneForm } from "@/modules/AuthModule";
+import { defineComponent } from "vue";
+export default defineComponent({
+    components: {
+        PhoneForm,
+    },
+});
 </script>
 
 <template>
-  <div>
-  </div>
+    <PhoneForm />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

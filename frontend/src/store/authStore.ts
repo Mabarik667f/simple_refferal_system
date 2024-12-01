@@ -14,9 +14,14 @@ export const authStore = defineStore("auth", () => {
     isAuth.value = Cookies.get("isAuth") === "true";
   }
 
-  async function setTokens(tokens: Tokens) {
-    Cookies.set("access", tokens.access_token);
-    Cookies.set("refresh", tokens.refresh_token);
+  async function setUserData(phone: string, code: string) {
+    Cookies.set("phone", phone);
+    Cookies.set("code", code);
+  }
+
+  async function setToken(token: string) {
+    Cookies.set("token", token);
+    Cookies.remove("code");
   }
 
   async function clearCookies() {
@@ -29,5 +34,12 @@ export const authStore = defineStore("auth", () => {
     }
   }
 
-  return { isAuth, setIsAuth, getCookieAuth, setTokens, clearCookies };
+  return {
+    isAuth,
+    setIsAuth,
+    getCookieAuth,
+    setToken,
+    setUserData,
+    clearCookies,
+  };
 });

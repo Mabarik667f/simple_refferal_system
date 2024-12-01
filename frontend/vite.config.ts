@@ -16,7 +16,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": fileURLToPath(new URL("/src", import.meta.url)),
       "@modules": fileURLToPath(new URL("./src/modules", import.meta.url)),
       "@assets": fileURLToPath(new URL("./src/assets", import.meta.url)),
     },
@@ -26,7 +26,6 @@ export default defineConfig({
       "/v1": {
         target: `${protocol}://${host}:${port}`,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/v1/, ""),
       },
     },
   },

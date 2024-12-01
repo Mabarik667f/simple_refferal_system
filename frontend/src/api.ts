@@ -1,14 +1,3 @@
-import Cookies from "js-cookie";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { authStore } from "@/store/authStore";
-import { createPinia } from "pinia";
-
-const router = useRouter();
-const store = authStore(createPinia());
-
-const { setTokens, clearCookies } = store;
-
 export default async function fetchApiV1(
   endpoint: string,
   options: {

@@ -1,11 +1,11 @@
 <script lang="ts">
-export default defineComponent({})
+import { VerifyCodeForm } from "@/modules/AuthModule";
+import { defineComponent } from "vue";
+export default defineComponent({ components: { VerifyCodeForm } });
 </script>
 
 <template>
-  <div>
-  </div>
+    <VerifyCodeForm />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

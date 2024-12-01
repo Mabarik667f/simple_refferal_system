@@ -40,7 +40,7 @@ class AuthView(generics.GenericAPIView):
         if serializer.is_valid():
             user_data = serializer.create(serializer.validated_data)
             return Response(
-                {"verify-code": user_data[1], "phone": user_data[0]},
+                {"code": user_data[1], "phone": user_data[0]},
                 status=status.HTTP_201_CREATED,
             )
         else:

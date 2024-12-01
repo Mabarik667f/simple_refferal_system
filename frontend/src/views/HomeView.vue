@@ -1,11 +1,12 @@
 <script lang="ts">
-export default defineComponent({})
+import { defineComponent } from "vue";
+export default defineComponent({});
 </script>
 
 <template>
-  <div>
-  </div>
+    <div>
+        <c-button>dsada</c-button>
+    </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
