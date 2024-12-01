@@ -8,7 +8,7 @@
 ```from django.core.management.utils import get_random_secret_key```
 ```print(get_random_secret_key()```
 
-API:
+# API:
 - docs/ GET 
 - docs/redoc GET - OpenAPI, сгенерированный ReDoc
 - docs/swagger GET - OpenAPI, сгенерированный Swagger
