@@ -78,6 +78,16 @@ class UserView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = "pk"
 
+    @extend_schema(
+            responses={
+                200: OpenApiResponse(
+                    UserSerializer, description="Данные о пользователе"
+                )
+            }
+        )
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
 
 class CurrentUserView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
@@ -85,6 +95,16 @@ class CurrentUserView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+    @extend_schema(
+            responses={
+                200: OpenApiResponse(
+                    UserSerializer, description="Данные о пользователе"
+                )
+            }
+        )
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
 
 class ActivateInviteCodeView(generics.CreateAPIView):

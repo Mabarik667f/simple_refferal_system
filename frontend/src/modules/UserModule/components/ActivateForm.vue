@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { ErrorTypes } from "@/interfaces/errorIntefaces";
+import { ErrorsType } from "@/interfaces/errorIntefaces";
 import activateInvitationCode from "../api/activateInvitationCode";
 import { storeToRefs } from "pinia";
 import { authStore } from "@/store/authStore";
@@ -17,7 +17,7 @@ export default defineComponent({
                 code.value = "";
             }
         });
-        const errors = ref<ErrorTypes>({
+        const errors = ref<ErrorsType>({
             invitation_code: "",
         });
 

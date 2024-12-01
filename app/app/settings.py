@@ -127,16 +127,6 @@ LOGGING = {
             "style": '{'
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': f"{BASE_DIR}/logs/log.log",
-            'formatter': 'custom_formatter',
-            'encoding': 'utf-8'
-        },
-    },
-    'loggers': {},
 }
 
 # Internationalization

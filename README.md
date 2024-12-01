@@ -9,13 +9,14 @@
 ```print(get_random_secret_key()```
 
 # API:
-- docs/ GET 
+- docs/ GET
 - docs/redoc GET - OpenAPI, сгенерированный ReDoc
 - docs/swagger GET - OpenAPI, сгенерированный Swagger
 - v1/user/
     - auth/ POST - Попытка авторизации, мы отправляем телефон и получаем код авторизации
-    - verify-code/ POST - Проверка кода авторизации для пользователя 
-    - activate-invite-code/ POST - Активация инвайт-кода 
+    - verify-code/ POST - Проверка кода авторизации для пользователя
+    - activate-invittation-code/ POST - Активация инвайт-кода
     - <int:pk>/ GET - Получение данных о пользователе
+    - me/ GET - Получение данных о текущем пользователе
     - list/ GET - Получение списка номеров телефонов пользователей,
     которые актвировали инвайт-код текущего пользователя

@@ -2,7 +2,7 @@
 import { useRouter } from "vue-router";
 import { defineComponent, ref } from "vue";
 import { authStore } from "@/store/authStore";
-import { ErrorTypes } from "@/interfaces/errorIntefaces";
+import { ErrorsType } from "@/interfaces/errorIntefaces";
 import auth from "../api/auth";
 export default defineComponent({
     setup() {
@@ -11,7 +11,7 @@ export default defineComponent({
         const { setUserTemporaryData } = store;
 
         const phone = ref<string>("");
-        const errors = ref<ErrorTypes>({
+        const errors = ref<ErrorsType>({
             phone: "",
         });
 

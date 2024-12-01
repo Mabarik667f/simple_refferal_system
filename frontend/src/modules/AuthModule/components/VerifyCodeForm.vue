@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import { defineComponent, ref, onMounted } from "vue";
 import { authStore } from "@/store/authStore";
-import { ErrorTypes } from "@/interfaces/errorIntefaces";
+import { ErrorsType } from "@/interfaces/errorIntefaces";
 import verifyCode from "../api/verifyCode";
 export default defineComponent({
     setup() {
@@ -12,7 +12,7 @@ export default defineComponent({
         const { setToken, setIsAuth } = store;
 
         const code = ref<string>("");
-        const errors = ref<ErrorTypes>({
+        const errors = ref<ErrorsType>({
             code: "",
         });
 

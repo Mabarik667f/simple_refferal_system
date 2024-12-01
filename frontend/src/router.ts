@@ -13,7 +13,9 @@ const { isAuth } = storeToRefs(store);
 const { getCookieAuth } = store;
 
 const authGuard = async (
+  // @ts-ignore
   to: RouteLocationNormalized,
+  // @ts-ignore
   from: RouteLocationNormalized,
   next: Function,
 ) => {
@@ -25,7 +27,9 @@ const authGuard = async (
 };
 
 const userAuth = async (
+  // @ts-ignore
   to: RouteLocationNormalized,
+  // @ts-ignore
   from: RouteLocationNormalized,
   next: Function,
 ) => {
@@ -67,9 +71,17 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  getCookieAuth().then(() => {
-    next();
-  });
-});
+router.beforeEach(
+  (
+    // @ts-ignore
+    to,
+    // @ts-ignore
+    from,
+    next,
+  ) => {
+    getCookieAuth().then(() => {
+      next();
+    });
+  },
+);
 export default router;
