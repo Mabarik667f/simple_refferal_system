@@ -9,8 +9,5 @@ from user.models import InvitationCode
 @receiver(post_save, sender=Token)
 def create_invitate_code_for_user(sender, instance, created, **kwargs):
     if created:
-        code = "".join(random.choices(ascii_letters+digits, k=6))
-        InvitationCode.objects.create(
-            user=instance.user,
-            code=code
-        )
+        code = "".join(random.choices(ascii_letters + digits, k=6))
+        InvitationCode.objects.create(user=instance.user, code=code)
